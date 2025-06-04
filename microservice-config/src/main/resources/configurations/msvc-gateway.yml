@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: usuario
+          uri: lb://msvc-usuario
+          predicates:
+            - Path=/gpp/usuario/**
+        - id: auth
+          uri: lb://msvc-auth
+          predicates:
+            - Path=/gpp/auth/**
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,gateway"
