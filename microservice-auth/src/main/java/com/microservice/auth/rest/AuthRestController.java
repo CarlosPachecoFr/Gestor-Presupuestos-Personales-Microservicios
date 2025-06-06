@@ -25,7 +25,7 @@ public class AuthRestController {
 		return ResponseEntity.ok(token);
 	}
 	
-	@GetMapping("/loginUsuario")
+	@PostMapping("/loginUsuario")
 	public ResponseEntity<TokenResponse> loginUsuario(@RequestBody LoginRequest loginRequest){
 		TokenResponse token = authService.login(loginRequest);
 		return ResponseEntity.ok(token);

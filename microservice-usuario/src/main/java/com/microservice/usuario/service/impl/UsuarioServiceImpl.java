@@ -33,7 +33,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public UsuarioDto buscarPorEmail(String email) {
-		return UsuarioDto.parse(usuarioRepository.buscarPorEmail(email));
+		UsuarioEntity usuario = usuarioRepository.buscarPorEmail(email);
+		return usuario != null ? UsuarioDto.parse(usuario) : null;
 	}
 
 }

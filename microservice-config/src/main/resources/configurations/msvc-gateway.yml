@@ -7,6 +7,12 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+           allowedOrigins: "http://localhost:4200"
+           allowedMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+           allowedHeaders: ["*"]
       routes:
         - id: usuario
           uri: lb://msvc-usuario

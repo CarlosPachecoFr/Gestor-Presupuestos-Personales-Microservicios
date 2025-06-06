@@ -33,6 +33,12 @@ public class AuthServiceImpl implements AuthService{
 				request.getEmail(),
 				passwordEncoder.encode(request.getContraseña())
 				);
+		
+		UsuarioDto usuarioExistente = authClient.buscarPorEmail(usuario.getEmail());
+		if(usuarioExistente != null) {
+			throw new RuntimeException("Usuario ya existente");
+		}
+		
 		authClient.crearUsuario(usuario);
 		UsuarioEntity usuarioCreado = UsuarioEntity.parse(authClient.buscarPorEmail(usuario.getEmail()));
 		String jwtToken = jwtService.generarToken(usuarioCreado);
