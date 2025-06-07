@@ -1,7 +1,6 @@
 package com.microservice.auth.service.impl;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.crypto.SecretKey;
@@ -42,6 +41,7 @@ public class JwtServiceImpl implements JwtService{
 				.signWith(obtenerKey())
 				.compact();
 	}
+	
 	private SecretKey obtenerKey() {
 		byte [] keyBytes = Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyBytes);
@@ -55,5 +55,15 @@ public class JwtServiceImpl implements JwtService{
 				.parseSignedClaims(token)
 				.getPayload();
 		return jwtToken.getSubject();
+	}
+
+	@Override
+	public Long extractUserId(String token) {
+		Claims claims = Jwts.parser()
+				.verifyWith(obtenerKey())
+				.build()
+				.parseSignedClaims(token.replace("Bearer ", ""))
+				.getPayload();
+		return claims.get("id", Long.class);
 	}
 }

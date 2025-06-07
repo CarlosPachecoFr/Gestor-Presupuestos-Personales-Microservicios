@@ -9,4 +9,6 @@ public interface JwtService {
 	public String tokenBuilder(UsuarioEntity usuario, long jwtExpiration);
 	
 	public String extractUsername(String token);
+	
+	public Long extractUserId(String token);
 }
