@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: msvc-transacciones
+  config:
+    import: optional:configserver:http://localhost:8888

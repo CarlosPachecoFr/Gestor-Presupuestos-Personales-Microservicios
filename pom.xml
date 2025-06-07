@@ -22,6 +22,7 @@
 		<module>microservice-config</module>
 		<module>microservice-usuario</module>
 		<module>microservice-auth</module>
+		<module>microservice-transacciones</module>
 	</modules>
 
   <properties>
