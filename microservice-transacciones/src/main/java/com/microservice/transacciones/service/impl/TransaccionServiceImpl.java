@@ -19,9 +19,40 @@ public class TransaccionServiceImpl implements TransaccionService{
 
 	@Override
 	public void crearTransaccion(String token, TransaccionDto transaccionDto) {
-		Long usuario_id = transaccionClient.obtenerUsuarioId(token);
-		transaccionDto.setUsuario_id(usuario_id);
+		transaccionDto.setUsuario_id(obtenerIdUsuarioToken(token));
 		transaccionRepository.crearTransaccion(TransaccionEntity.parse(transaccionDto));
 	}
+
+	@Override
+	public double obtenerTotalIngresosPorId(String token) {
+		return transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
+	}
+
+	@Override
+	public double obtenerTotalGastosPorId(String token) {
+		return transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
+	}
+	
+	@Override
+	public double obtenerBalancePorId(String token) {
+		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
+		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
+		double balance = ingresos - gastos;
+		return balance;
+	}
+	
+	@Override
+	public double obtenerTasaAhorroPorId(String token) {
+		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
+		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
+		double tasaAhorro = (gastos/ingresos)*100;
+		return tasaAhorro;
+	}
+	
+	private Long obtenerIdUsuarioToken(String token) {
+		return  transaccionClient.obtenerUsuarioId(token);
+	}
+
+	
 
 }

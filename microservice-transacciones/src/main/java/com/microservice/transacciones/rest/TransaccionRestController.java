@@ -1,6 +1,7 @@
 package com.microservice.transacciones.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,5 +21,25 @@ public class TransaccionRestController {
 	@PostMapping("/crearTransaccion")
 	public void crearTransaccion(@RequestHeader("Authorization") String token, @RequestBody TransaccionDto transaccionDto) {
 		transaccionService.crearTransaccion(token, transaccionDto);
+	}
+	
+	@GetMapping("/obtenerTotalIngresosPorId")
+	public double obtenerTotalIngresosPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerTotalIngresosPorId(token);
+	}
+	
+	@GetMapping("/obtenerTotalGastosPorId")
+	public double obtenerTotalGastosPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerTotalGastosPorId(token);
+	}
+	
+	@GetMapping("/obtenerBalancePorId")
+	public double obtenerBalancePorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerBalancePorId(token);
+	}
+	
+	@GetMapping("/obtenerTasaAhorroPorId")
+	public double obtenerTasaAhorroPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerTasaAhorroPorId(token);
 	}
 }
