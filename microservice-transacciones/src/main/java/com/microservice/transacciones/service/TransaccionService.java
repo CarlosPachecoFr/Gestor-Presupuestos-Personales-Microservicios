@@ -13,4 +13,16 @@ public interface TransaccionService {
 	public double obtenerBalancePorId(String token);
 	
 	public double obtenerTasaAhorroPorId(String token);
+	
+	public double obtenerIngresosMensualPorId(String token);
+	
+	public double obtenerGastosMensualPorId(String token);
+	
+	public double obtenerBalanceMensualPorId(String token);
+	
+	public double obtenerTasaAhorroMensualPorId(String token);
+	
+	public double variacionIngresosMesAnteriorPorId(String token);
+	
+	public double variacionGastosMesAnteriorPorId(String token);
 }

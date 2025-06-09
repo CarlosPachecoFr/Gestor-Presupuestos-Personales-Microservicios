@@ -42,4 +42,34 @@ public class TransaccionRestController {
 	public double obtenerTasaAhorroPorId(@RequestHeader("Authorization") String token) {
 		return transaccionService.obtenerTasaAhorroPorId(token);
 	}
+	
+	@GetMapping("/obtenerIngresosMensualPorId")
+	public double obtenerIngresosMensualPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerIngresosMensualPorId(token);
+	}
+	
+	@GetMapping("/obtenerGastosMensualPorId")
+	public double obtenerGastosMensualPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerGastosMensualPorId(token);
+	}
+	
+	@GetMapping("/obtenerBalanceMensualPorId")
+	public double obtenerBalanceMensualPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerBalanceMensualPorId(token);
+	}
+	
+	@GetMapping("/obtenerTasaAhorroMensualPorId")
+	public double obtenerTasaAhorroMensualPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.obtenerTasaAhorroMensualPorId(token);
+	}
+	
+	@GetMapping("/variacionIngresosMesAnteriorPorId")
+		public double variacionIngresosMesAnteriorPorId(@RequestHeader("Authorization") String token) {
+		return transaccionService.variacionIngresosMesAnteriorPorId(token);
+	}
+	
+	@GetMapping("/variacionGastosMesAnteriorPorId")
+	public double variacionGastosMesAnteriorPorId(@RequestHeader("Authorization") String token) {
+	return transaccionService.variacionGastosMesAnteriorPorId(token);
+}
 }

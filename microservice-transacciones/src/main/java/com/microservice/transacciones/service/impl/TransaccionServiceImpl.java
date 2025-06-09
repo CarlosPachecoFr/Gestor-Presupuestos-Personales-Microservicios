@@ -45,12 +45,54 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double obtenerTasaAhorroPorId(String token) {
 		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
-		double tasaAhorro = (gastos/ingresos)*100;
+		double tasaAhorro = (gastos / ingresos) * 100;
 		return tasaAhorro;
 	}
 	
 	private Long obtenerIdUsuarioToken(String token) {
 		return  transaccionClient.obtenerUsuarioId(token);
+	}
+
+	@Override
+	public double obtenerIngresosMensualPorId(String token) {
+		return transaccionRepository.obtenerIngresosMensualPorId(transaccionClient.obtenerUsuarioId(token));
+	}
+
+	@Override
+	public double obtenerGastosMensualPorId(String token) {
+		return transaccionRepository.obtenerGastosMensualPorId(transaccionClient.obtenerUsuarioId(token));
+	}
+
+	@Override
+	public double obtenerBalanceMensualPorId(String token) {
+		double ingresos = transaccionRepository.obtenerIngresosMensualPorId(obtenerIdUsuarioToken(token));
+		double gastos = transaccionRepository.obtenerGastosMensualPorId(obtenerIdUsuarioToken(token));
+		double balance = ingresos - gastos;
+		return balance;
+	}
+
+	@Override
+	public double obtenerTasaAhorroMensualPorId(String token) {
+		double ingresos = transaccionRepository.obtenerIngresosMensualPorId(obtenerIdUsuarioToken(token));
+		double gastos = transaccionRepository.obtenerGastosMensualPorId(obtenerIdUsuarioToken(token));
+		double tasaAhorro = (gastos / ingresos) * 100;
+		return tasaAhorro;
+	}
+
+	@Override
+	public double variacionIngresosMesAnteriorPorId(String token) {
+		double ingresosMesActual = transaccionRepository.obtenerIngresosMensualPorId(transaccionClient.obtenerUsuarioId(token));
+		double ingresosMesAnterior = transaccionRepository.obtenerIngresosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
+		double variacion = ((ingresosMesActual - ingresosMesAnterior) / ingresosMesAnterior) * 100;
+		return variacion;
+	}
+
+	@Override
+	public double variacionGastosMesAnteriorPorId(String token) {
+		double gastosMesActual = transaccionRepository.obtenerGastosMensualPorId(transaccionClient.obtenerUsuarioId(token));
+		double gastosMesAnterior = transaccionRepository.obtenerGastosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
+		double variacion = ((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100;
+		return variacion;
 	}
 
 	

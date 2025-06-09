@@ -23,4 +23,17 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 	
 	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'gasto'", nativeQuery = true)
 	public double obtenerTotalGastosPorId(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'ingreso' AND MONTH(fecha_transaccion) = MONTH(CURDATE()) AND YEAR(fecha_transaccion) = YEAR(CURDATE())", nativeQuery = true)
+	public double obtenerIngresosMensualPorId(@Param("usuario_id") Long usuario_id);
+	
+	
+	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'gasto' AND MONTH(fecha_transaccion) = MONTH(CURDATE()) AND YEAR(fecha_transaccion) = YEAR(CURDATE())", nativeQuery = true)
+	public double obtenerGastosMensualPorId(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'ingreso' AND MONTH(fecha_transaccion) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(fecha_transaccion) = YEAR(CURDATE())", nativeQuery = true)
+	public double obtenerIngresosMesAnteriorPorId(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'gasto' AND MONTH(fecha_transaccion) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(fecha_transaccion) = YEAR(CURDATE())", nativeQuery = true)
+	public double obtenerGastosMesAnteriorPorId(@Param("usuario_id") Long usuario_id);
 }
