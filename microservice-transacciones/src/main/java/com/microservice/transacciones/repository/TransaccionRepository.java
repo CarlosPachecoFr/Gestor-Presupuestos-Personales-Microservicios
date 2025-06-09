@@ -15,7 +15,7 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 
 	@Modifying
 	@Transactional
-	@Query(value = "INSERT INTO transacciones (tipo,cantidad,categoria,descripcion,usuario_id) VALUES (:#{#transaccion.tipo},:#{#transaccion.cantidad},:#{#transaccion.categoria},:#{#transaccion.descripcion},:#{#transaccion.usuario_id})", nativeQuery = true)
+	@Query(value = "INSERT INTO transacciones (tipo,cantidad,categoria,descripcion,fecha_transaccion,usuario_id) VALUES (:#{#transaccion.tipo},:#{#transaccion.cantidad},:#{#transaccion.categoria},:#{#transaccion.descripcion},:#{#transaccion.fecha_transaccion},:#{#transaccion.usuario_id})", nativeQuery = true)
 	public void crearTransaccion(@Param("transaccion") TransaccionEntity transaccion);
 	
 	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'ingreso'", nativeQuery = true)

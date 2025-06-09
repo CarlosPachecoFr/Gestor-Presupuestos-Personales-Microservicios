@@ -1,5 +1,7 @@
 package com.microservice.transacciones.dto;
 
+import java.time.LocalDate;
+
 import com.microservice.transacciones.entity.TransaccionEntity;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ public class TransaccionDto {
 	private double cantidad;
 	private String categoria;
 	private String descripcion;
+	private LocalDate fecha_transaccion = LocalDate.now();
 	private Long usuario_id;
 	
 	
@@ -35,6 +38,7 @@ public class TransaccionDto {
 		nT.setCantidad(transaccionEntity.getCantidad());
 		nT.setCategoria(transaccionEntity.getCategoria());
 		nT.setDescripcion(transaccionEntity.getDescripcion());
+		nT.setFecha_transaccion(transaccionEntity.getFecha_transaccion());
 		nT.setUsuario_id(transaccionEntity.getUsuario_id());
 		
 		return nT;

@@ -1,5 +1,7 @@
 package com.microservice.transacciones.entity;
 
+import java.time.LocalDate;
+
 import com.microservice.transacciones.dto.TransaccionDto;
 
 import jakarta.persistence.Column;
@@ -36,6 +38,9 @@ public class TransaccionEntity {
 	private String descripcion;
 	
 	@Column
+	private LocalDate fecha_transaccion;
+	
+	@Column
 	private Long usuario_id;
 	
 	public static TransaccionEntity parse(TransaccionDto transaccionDto) {
@@ -46,6 +51,7 @@ public class TransaccionEntity {
 		nT.setCantidad(transaccionDto.getCantidad());
 		nT.setCategoria(transaccionDto.getCategoria());
 		nT.setDescripcion(transaccionDto.getDescripcion());
+		nT.setFecha_transaccion(transaccionDto.getFecha_transaccion());
 		nT.setUsuario_id(transaccionDto.getUsuario_id());
 		
 		return nT;
