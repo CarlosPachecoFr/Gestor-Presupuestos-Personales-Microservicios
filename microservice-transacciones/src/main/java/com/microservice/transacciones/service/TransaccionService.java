@@ -1,5 +1,7 @@
 package com.microservice.transacciones.service;
 
+import java.math.BigDecimal;
+
 import com.microservice.transacciones.dto.TransaccionDto;
 
 public interface TransaccionService {
@@ -10,7 +12,7 @@ public interface TransaccionService {
 	
 	public double obtenerTotalGastosPorId(String token);
 	
-	public double obtenerBalancePorId(String token);
+	public BigDecimal obtenerBalancePorId(String token);
 	
 	public double obtenerTasaAhorroPorId(String token);
 	
@@ -18,7 +20,7 @@ public interface TransaccionService {
 	
 	public double obtenerGastosMensualPorId(String token);
 	
-	public double obtenerBalanceMensualPorId(String token);
+	public BigDecimal obtenerBalanceMensualPorId(String token);
 	
 	public double obtenerTasaAhorroMensualPorId(String token);
 	

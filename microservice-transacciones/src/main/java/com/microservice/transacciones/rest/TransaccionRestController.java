@@ -1,5 +1,7 @@
 package com.microservice.transacciones.rest;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class TransaccionRestController {
 	}
 	
 	@GetMapping("/obtenerBalancePorId")
-	public double obtenerBalancePorId(@RequestHeader("Authorization") String token) {
+	public BigDecimal obtenerBalancePorId(@RequestHeader("Authorization") String token) {
 		return transaccionService.obtenerBalancePorId(token);
 	}
 	
@@ -54,7 +56,7 @@ public class TransaccionRestController {
 	}
 	
 	@GetMapping("/obtenerBalanceMensualPorId")
-	public double obtenerBalanceMensualPorId(@RequestHeader("Authorization") String token) {
+	public BigDecimal obtenerBalanceMensualPorId(@RequestHeader("Authorization") String token) {
 		return transaccionService.obtenerBalanceMensualPorId(token);
 	}
 	

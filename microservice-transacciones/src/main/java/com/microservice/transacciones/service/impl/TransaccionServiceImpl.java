@@ -1,5 +1,8 @@
 package com.microservice.transacciones.service.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +37,11 @@ public class TransaccionServiceImpl implements TransaccionService{
 	}
 	
 	@Override
-	public double obtenerBalancePorId(String token) {
+	public BigDecimal obtenerBalancePorId(String token) {
 		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
-		double balance = ingresos - gastos;
+		BigDecimal balance = BigDecimal.valueOf(ingresos - gastos);
+		balance = balance.setScale(2, RoundingMode.HALF_UP);
 		return balance;
 	}
 	
@@ -45,7 +49,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double obtenerTasaAhorroPorId(String token) {
 		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
-		double tasaAhorro = (gastos / ingresos) * 100;
+		double tasaAhorro = Math.round((gastos / ingresos) * 100);
 		return tasaAhorro;
 	}
 	
@@ -64,10 +68,11 @@ public class TransaccionServiceImpl implements TransaccionService{
 	}
 
 	@Override
-	public double obtenerBalanceMensualPorId(String token) {
+	public BigDecimal obtenerBalanceMensualPorId(String token) {
 		double ingresos = transaccionRepository.obtenerIngresosMensualPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerGastosMensualPorId(obtenerIdUsuarioToken(token));
-		double balance = ingresos - gastos;
+		BigDecimal balance = BigDecimal.valueOf(ingresos - gastos);
+		balance = balance.setScale(2, RoundingMode.HALF_UP);
 		return balance;
 	}
 
@@ -75,7 +80,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double obtenerTasaAhorroMensualPorId(String token) {
 		double ingresos = transaccionRepository.obtenerIngresosMensualPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerGastosMensualPorId(obtenerIdUsuarioToken(token));
-		double tasaAhorro = (gastos / ingresos) * 100;
+		double tasaAhorro = Math.round((gastos / ingresos) * 100);
 		return tasaAhorro;
 	}
 
@@ -83,7 +88,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double variacionIngresosMesAnteriorPorId(String token) {
 		double ingresosMesActual = transaccionRepository.obtenerIngresosMensualPorId(transaccionClient.obtenerUsuarioId(token));
 		double ingresosMesAnterior = transaccionRepository.obtenerIngresosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
-		double variacion = ((ingresosMesActual - ingresosMesAnterior) / ingresosMesAnterior) * 100;
+		double variacion = Math.round(((ingresosMesActual - ingresosMesAnterior) / ingresosMesAnterior) * 100);
 		return variacion;
 	}
 
@@ -91,7 +96,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double variacionGastosMesAnteriorPorId(String token) {
 		double gastosMesActual = transaccionRepository.obtenerGastosMensualPorId(transaccionClient.obtenerUsuarioId(token));
 		double gastosMesAnterior = transaccionRepository.obtenerGastosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
-		double variacion = ((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100;
+		double variacion = Math.round(((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100);
 		return variacion;
 	}
 
