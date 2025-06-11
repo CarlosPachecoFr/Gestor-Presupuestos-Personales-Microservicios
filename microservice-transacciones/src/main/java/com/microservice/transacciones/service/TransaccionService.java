@@ -1,6 +1,7 @@
 package com.microservice.transacciones.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.microservice.transacciones.dto.TransaccionDto;
 
@@ -27,4 +28,6 @@ public interface TransaccionService {
 	public double variacionIngresosMesAnteriorPorId(String token);
 	
 	public double variacionGastosMesAnteriorPorId(String token);
+	
+	public List<TransaccionDto> obtenerUltimasTransacciones(String token);
 }

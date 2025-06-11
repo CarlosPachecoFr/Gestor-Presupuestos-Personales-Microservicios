@@ -2,6 +2,8 @@ package com.microservice.transacciones.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,6 +100,15 @@ public class TransaccionServiceImpl implements TransaccionService{
 		double gastosMesAnterior = transaccionRepository.obtenerGastosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
 		double variacion = Math.round(((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100);
 		return variacion;
+	}
+
+	@Override
+	public List<TransaccionDto> obtenerUltimasTransacciones(String token) {
+		List<TransaccionDto> transacciones = new ArrayList<TransaccionDto>();
+		for(TransaccionEntity transaccion: transaccionRepository.obtenerUltimasTransacciones(transaccionClient.obtenerUsuarioId(token))) {
+			transacciones.add(TransaccionDto.parse(transaccion));
+		}
+		return transacciones;
 	}
 
 	

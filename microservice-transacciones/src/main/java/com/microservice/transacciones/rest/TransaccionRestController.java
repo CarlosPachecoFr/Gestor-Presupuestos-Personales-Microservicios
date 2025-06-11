@@ -1,6 +1,7 @@
 package com.microservice.transacciones.rest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,12 +67,17 @@ public class TransaccionRestController {
 	}
 	
 	@GetMapping("/variacionIngresosMesAnteriorPorId")
-		public double variacionIngresosMesAnteriorPorId(@RequestHeader("Authorization") String token) {
+	public double variacionIngresosMesAnteriorPorId(@RequestHeader("Authorization") String token) {
 		return transaccionService.variacionIngresosMesAnteriorPorId(token);
 	}
 	
 	@GetMapping("/variacionGastosMesAnteriorPorId")
 	public double variacionGastosMesAnteriorPorId(@RequestHeader("Authorization") String token) {
-	return transaccionService.variacionGastosMesAnteriorPorId(token);
-}
+		return transaccionService.variacionGastosMesAnteriorPorId(token);
+	}
+	
+	@GetMapping("/obtenerUltimasTransacciones")
+	public List<TransaccionDto> obtenerUltimasTransacciones(@RequestHeader("Authorization") String token){
+		return transaccionService.obtenerUltimasTransacciones(token);
+	}
 }
