@@ -80,4 +80,14 @@ public class TransaccionRestController {
 	public List<TransaccionDto> obtenerUltimasTransacciones(@RequestHeader("Authorization") String token){
 		return transaccionService.obtenerUltimasTransacciones(token);
 	}
+	
+	@GetMapping("/obtenerIngresosUltimosMeses")
+	public List<Object[]> obtenerIngresosUltimosMeses(@RequestHeader("Authorization") String token){
+		return transaccionService.obtenerIngresosUltimosMeses(token);
+	}
+	
+	@GetMapping("/obtenerGastosUltimosMeses")
+	public List<Object[]> obtenerGastosUltimosMeses(@RequestHeader("Authorization") String token){
+		return transaccionService.obtenerGastosUltimosMeses(token);
+	}
 }

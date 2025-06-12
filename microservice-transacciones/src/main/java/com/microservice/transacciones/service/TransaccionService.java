@@ -30,4 +30,8 @@ public interface TransaccionService {
 	public double variacionGastosMesAnteriorPorId(String token);
 	
 	public List<TransaccionDto> obtenerUltimasTransacciones(String token);
+	
+	public List<Object[]> obtenerIngresosUltimosMeses(String token);
+	
+	public List<Object[]> obtenerGastosUltimosMeses(String token);
 }

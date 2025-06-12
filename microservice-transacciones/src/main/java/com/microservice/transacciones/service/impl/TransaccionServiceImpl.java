@@ -111,6 +111,16 @@ public class TransaccionServiceImpl implements TransaccionService{
 		return transacciones;
 	}
 
+	@Override
+	public List<Object[]> obtenerIngresosUltimosMeses(String token) {
+		return transaccionRepository.obtenerIngresosUltimosMeses(transaccionClient.obtenerUsuarioId(token));
+	}
+
+	@Override
+	public List<Object[]> obtenerGastosUltimosMeses(String token) {
+		return transaccionRepository.obtenerGastosUltimosMeses(transaccionClient.obtenerUsuarioId(token));
+	}
+
 	
 
 }

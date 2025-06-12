@@ -39,6 +39,52 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 	@Query(value = "SELECT COALESCE(SUM(cantidad), 0) FROM transacciones WHERE usuario_id = :usuario_id AND tipo = 'gasto' AND MONTH(fecha_transaccion) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(fecha_transaccion) = YEAR(CURDATE())", nativeQuery = true)
 	public double obtenerGastosMesAnteriorPorId(@Param("usuario_id") Long usuario_id);
 	
-	@Query(value = "SELECT * FROM transacciones WHERE usuario_id = :usuario_id ORDER BY fecha_transaccion DESC LIMIT 5", nativeQuery = true)
+	@Query(value = "SELECT * FROM transacciones WHERE usuario_id = :usuario_id ORDER BY fecha_transaccion DESC, id DESC LIMIT 5", nativeQuery = true)
 	public List<TransaccionEntity> obtenerUltimasTransacciones(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT CASE MONTH(fecha_transaccion) " +
+            "WHEN 01 THEN 'Enero' " +
+            "WHEN 02 THEN 'Febrero' " +
+            "WHEN 03 THEN 'Marzo' " +
+            "WHEN 04 THEN 'Abril' " +
+            "WHEN 05 THEN 'Mayo' " +
+            "WHEN 06 THEN 'Junio' " +
+            "WHEN 07 THEN 'Julio' " +
+            "WHEN 08 THEN 'Agosto' " +
+            "WHEN 09 THEN 'Septiembre' " +
+            "WHEN 10 THEN 'Octubre' " +
+            "WHEN 11 THEN 'Noviembre' " +
+            "WHEN 12 THEN 'Diciembre' END AS mes, " +
+            "SUM(cantidad) AS total " +
+            "FROM transacciones " +
+            "WHERE fecha_transaccion >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) " +
+            "AND tipo = 'ingreso' " +
+            "AND usuario_id = :usuario_id " +
+            "GROUP BY MONTH(fecha_transaccion) " +
+            "ORDER BY MONTH(fecha_transaccion)",
+    nativeQuery = true)
+	public List<Object[]> obtenerIngresosUltimosMeses(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT CASE MONTH(fecha_transaccion) " +
+            "WHEN 01 THEN 'Enero' " +
+            "WHEN 02 THEN 'Febrero' " +
+            "WHEN 03 THEN 'Marzo' " +
+            "WHEN 04 THEN 'Abril' " +
+            "WHEN 05 THEN 'Mayo' " +
+            "WHEN 06 THEN 'Junio' " +
+            "WHEN 07 THEN 'Julio' " +
+            "WHEN 08 THEN 'Agosto' " +
+            "WHEN 09 THEN 'Septiembre' " +
+            "WHEN 10 THEN 'Octubre' " +
+            "WHEN 11 THEN 'Noviembre' " +
+            "WHEN 12 THEN 'Diciembre' END AS mes, " +
+            "SUM(cantidad) AS total " +
+            "FROM transacciones " +
+            "WHERE fecha_transaccion >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) " +
+            "AND tipo = 'gasto' " +
+            "AND usuario_id = :usuario_id " +
+            "GROUP BY MONTH(fecha_transaccion) " +
+            "ORDER BY MONTH(fecha_transaccion)",
+    nativeQuery = true)
+	public List<Object[]> obtenerGastosUltimosMeses(@Param("usuario_id") Long usuario_id);
 }
