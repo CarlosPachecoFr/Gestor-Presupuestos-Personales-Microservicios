@@ -95,4 +95,9 @@ public class TransaccionRestController {
 	public List<Object[]> obtenerPorcentajeGastosPorCategoria(@RequestHeader("Authorization") String token){
 		return transaccionService.obtenerGastosPorCategoria(token);
 	}
+	
+	@GetMapping("/obtenerIngresosPorCategoria")
+	public List<Object[]> obtenerIngresosPorCategoria(@RequestHeader("Authorization") String token){
+		return  transaccionService.obtenerIngresosPorCategoria(token);
+	}
 }

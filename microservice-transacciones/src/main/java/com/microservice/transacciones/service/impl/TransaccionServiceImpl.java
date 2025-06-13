@@ -126,6 +126,9 @@ public class TransaccionServiceImpl implements TransaccionService{
 		return transaccionRepository.obtenerGastosPorCategoria(transaccionClient.obtenerUsuarioId(token));
 	}
 
-	
+	@Override
+	public List<Object[]> obtenerIngresosPorCategoria(String token) {
+		return transaccionRepository.obtenerIngresosPorCategoria(transaccionClient.obtenerUsuarioId(token));
+	}
 
 }
