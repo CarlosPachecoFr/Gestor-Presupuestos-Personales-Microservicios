@@ -34,4 +34,6 @@ public interface TransaccionService {
 	public List<Object[]> obtenerIngresosUltimosMeses(String token);
 	
 	public List<Object[]> obtenerGastosUltimosMeses(String token);
+	
+	public List<Object[]> obtenerGastosPorCategoria(String token);
 }

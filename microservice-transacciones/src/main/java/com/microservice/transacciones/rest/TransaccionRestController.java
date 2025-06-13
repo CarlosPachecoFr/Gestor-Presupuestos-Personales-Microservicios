@@ -90,4 +90,9 @@ public class TransaccionRestController {
 	public List<Object[]> obtenerGastosUltimosMeses(@RequestHeader("Authorization") String token){
 		return transaccionService.obtenerGastosUltimosMeses(token);
 	}
+	
+	@GetMapping("/obtenerGastosPorCategoria")
+	public List<Object[]> obtenerPorcentajeGastosPorCategoria(@RequestHeader("Authorization") String token){
+		return transaccionService.obtenerGastosPorCategoria(token);
+	}
 }
