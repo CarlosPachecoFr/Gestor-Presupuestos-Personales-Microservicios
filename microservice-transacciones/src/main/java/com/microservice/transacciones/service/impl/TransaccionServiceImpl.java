@@ -131,4 +131,13 @@ public class TransaccionServiceImpl implements TransaccionService{
 		return transaccionRepository.obtenerIngresosPorCategoria(transaccionClient.obtenerUsuarioId(token));
 	}
 
+	@Override
+	public List<TransaccionDto> obtenerTransacciones(String token) {
+		List<TransaccionDto> transacciones = new ArrayList<TransaccionDto>();
+		for(TransaccionEntity transaccion: transaccionRepository.obtenerTransacciones(transaccionClient.obtenerUsuarioId(token))) {
+			transacciones.add(TransaccionDto.parse(transaccion));
+		}
+		return transacciones;
+	}
+
 }

@@ -38,4 +38,6 @@ public interface TransaccionService {
 	public List<Object[]> obtenerGastosPorCategoria(String token);
 	
 	public List<Object[]> obtenerIngresosPorCategoria(String token);
+	
+	public List<TransaccionDto> obtenerTransacciones(String token);
 }

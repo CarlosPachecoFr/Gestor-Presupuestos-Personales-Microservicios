@@ -100,4 +100,9 @@ public class TransaccionRestController {
 	public List<Object[]> obtenerIngresosPorCategoria(@RequestHeader("Authorization") String token){
 		return  transaccionService.obtenerIngresosPorCategoria(token);
 	}
+	
+	@GetMapping("/obtenerTransacciones")
+	public List<TransaccionDto> obtenerTransacciones(@RequestHeader("Authorization") String token){
+		return transaccionService.obtenerTransacciones(token);
+	}
 }
