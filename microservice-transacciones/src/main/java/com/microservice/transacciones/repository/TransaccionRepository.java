@@ -110,6 +110,6 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 		""", nativeQuery = true)
 	public List<Object[]> obtenerIngresosPorCategoria(@Param("usuario_id") Long usuario_id);
 	
-	@Query(value = "SELECT * FROM transacciones WHERE usuario_id = :usuario_id", nativeQuery = true)
+	@Query(value = "SELECT * FROM transacciones WHERE usuario_id = :usuario_id ORDER BY id DESC", nativeQuery = true)
 	public List<TransaccionEntity> obtenerTransacciones(@Param("usuario_id") Long usuario_id);
 }
