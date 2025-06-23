@@ -140,4 +140,14 @@ public class TransaccionServiceImpl implements TransaccionService{
 		return transacciones;
 	}
 
+	@Override
+	public List<Object[]> obtenerTotalGastosPorCategoria(String token) {
+		return transaccionRepository.obtenerTotalGastosPorCategoria(transaccionClient.obtenerUsuarioId(token));
+	}
+
+	@Override
+	public List<Object[]> obtenerTotalIngresosPorCategoria(String token) {
+		return transaccionRepository.obtenerTotalIngresosPorCategoria(transaccionClient.obtenerUsuarioId(token));
+	}
+
 }

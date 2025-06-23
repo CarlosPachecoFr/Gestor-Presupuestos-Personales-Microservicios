@@ -112,4 +112,24 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 	
 	@Query(value = "SELECT * FROM transacciones WHERE usuario_id = :usuario_id ORDER BY id DESC", nativeQuery = true)
 	public List<TransaccionEntity> obtenerTransacciones(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = """
+		    SELECT categoria, SUM(cantidad) AS total
+    FROM transacciones
+    WHERE tipo = 'gasto'
+      AND usuario_id = :usuario_id
+    GROUP BY categoria
+    ORDER BY total DESC
+		""", nativeQuery = true)
+	public List<Object []> obtenerTotalGastosPorCategoria(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = """
+		    SELECT categoria, SUM(cantidad) AS total
+    FROM transacciones
+    WHERE tipo = 'ingreso'
+      AND usuario_id = :usuario_id
+    GROUP BY categoria
+    ORDER BY total DESC
+		""", nativeQuery = true)
+	public List<Object[]> obtenerTotalIngresosPorCategoria(@Param("usuario_id") Long usuario_id);
 }
