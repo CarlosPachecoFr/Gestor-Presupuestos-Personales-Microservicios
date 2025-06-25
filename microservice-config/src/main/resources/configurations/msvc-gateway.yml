@@ -26,6 +26,10 @@ spring:
           uri: lb://msvc-transacciones
           predicates:
             - Path=/gpp/transaccion/**
+        - id: meta
+          uri: lb://msvc-metas
+          predicates:
+            - Path=/gpp/metas/**
 
 eureka:
   instance:

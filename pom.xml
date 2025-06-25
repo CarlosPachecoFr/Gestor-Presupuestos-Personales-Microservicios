@@ -23,6 +23,7 @@
 		<module>microservice-usuario</module>
 		<module>microservice-auth</module>
 		<module>microservice-transacciones</module>
+		<module>microservice-metas</module>
 	</modules>
 
   <properties>
