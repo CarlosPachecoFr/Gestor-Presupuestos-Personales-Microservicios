@@ -1,6 +1,9 @@
 package com.microservice.metas.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,6 +23,11 @@ public class MetaRestController {
 	@PostMapping("/crearMeta")
 	public void crearMeta(@RequestHeader("Authorization") String token, @RequestBody MetaDto meta) {
 		metaService.crearMeta(token, meta);
+	}
+	
+	@GetMapping("/obtenerMetasUsuarioId")
+	public List<MetaDto> obtenerMetasUsuarioId(@RequestHeader("Authorization") String token) {
+		return metaService.obtenerMetasUsuarioId(token);
 	}
 
 }

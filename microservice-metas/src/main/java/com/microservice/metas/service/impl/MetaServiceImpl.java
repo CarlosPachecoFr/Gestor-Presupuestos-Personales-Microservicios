@@ -1,5 +1,8 @@
 package com.microservice.metas.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,15 @@ public class MetaServiceImpl implements MetaService{
 		meta.setUsuario_id(metaClient.obtenerUsuarioId(token));
 		metaRepository.crearMeta(MetaEntity.parse(meta));
 		
+	}
+
+	@Override
+	public List<MetaDto> obtenerMetasUsuarioId(String token) {
+		List<MetaDto> metas = new ArrayList<>();
+		for(MetaEntity meta: metaRepository.obtenerMetasUsuarioId(metaClient.obtenerUsuarioId(token))) {
+			metas.add(MetaDto.parse(meta));
+		}
+		return metas;
 	}
 
 }
