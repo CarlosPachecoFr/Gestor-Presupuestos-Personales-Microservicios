@@ -22,4 +22,9 @@ public interface MetaRepository extends JpaRepository<MetaEntity, Long>{
 	
 	@Query( value = "SELECT * FROM metas WHERE usuario_id = :usuario_id", nativeQuery = true)
 	public List<MetaEntity> obtenerMetasUsuarioId(@Param("usuario_id") Long usuario_id);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE metas SET cantidad_actual = cantidad_actual + :cantidad_añadir WHERE usuario_id = :usuario_id AND id = :id", nativeQuery = true)
+	public void añadirCantidadMeta(@Param("usuario_id") Long usuario_id, @Param("cantidad_añadir") double cantidad_añadir, @Param("id") Long id);
 }

@@ -37,4 +37,10 @@ public class MetaServiceImpl implements MetaService{
 		return metas;
 	}
 
+	@Override
+	public void añadirCantidadMeta(String token, double cantidad_añadir, Long id) {
+		Long usuario_id = metaClient.obtenerUsuarioId(token);
+		metaRepository.añadirCantidadMeta(usuario_id, cantidad_añadir, id);
+	}
+
 }

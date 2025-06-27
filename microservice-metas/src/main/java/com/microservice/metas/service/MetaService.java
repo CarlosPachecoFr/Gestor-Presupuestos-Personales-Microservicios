@@ -9,4 +9,6 @@ public interface MetaService {
 	public void crearMeta(String token, MetaDto meta);
 	
 	public List<MetaDto> obtenerMetasUsuarioId(String token);
+	
+	public void añadirCantidadMeta(String token, double cantidad_añadir, Long id);
 }
