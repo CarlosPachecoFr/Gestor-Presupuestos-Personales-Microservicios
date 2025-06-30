@@ -150,4 +150,9 @@ public class TransaccionServiceImpl implements TransaccionService{
 		return transaccionRepository.obtenerTotalIngresosPorCategoria(transaccionClient.obtenerUsuarioId(token));
 	}
 
+	@Override
+	public List<Object[]> obtenerGastosSemanales(String token) {
+		return transaccionRepository.obtenerGastosSemanales(transaccionClient.obtenerUsuarioId(token));
+	}
+
 }

@@ -132,4 +132,34 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
     ORDER BY total DESC
 		""", nativeQuery = true)
 	public List<Object[]> obtenerTotalIngresosPorCategoria(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = "SELECT " +
+	        "CASE DAYOFWEEK(fecha_transaccion) " +
+	        "WHEN 1 THEN 'Domingo' " +
+	        "WHEN 2 THEN 'Lunes' " +
+	        "WHEN 3 THEN 'Martes' " +
+	        "WHEN 4 THEN 'Miércoles' " +
+	        "WHEN 5 THEN 'Jueves' " +
+	        "WHEN 6 THEN 'Viernes' " +
+	        "WHEN 7 THEN 'Sábado' " +
+	        "END AS dia_semana, " +
+	        "SUM(cantidad) AS total_gastos " +
+	        "FROM transacciones " +
+	        "WHERE usuario_id = :usuario_id " +
+	        "AND tipo = 'gasto' " +
+	        "AND fecha_transaccion >= CURDATE() - INTERVAL 6 DAY " +
+	        "GROUP BY DAYOFWEEK(fecha_transaccion) " +
+	        "ORDER BY FIELD( " +
+	        "CASE DAYOFWEEK(fecha_transaccion) " +
+	        "WHEN 1 THEN 'Domingo' " +
+	        "WHEN 2 THEN 'Lunes' " +
+	        "WHEN 3 THEN 'Martes' " +
+	        "WHEN 4 THEN 'Miércoles' " +
+	        "WHEN 5 THEN 'Jueves' " +
+	        "WHEN 6 THEN 'Viernes' " +
+	        "WHEN 7 THEN 'Sábado' " +
+	        "END, " +
+	        "'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');",
+	        nativeQuery = true)
+	public List<Object[]> obtenerGastosSemanales(@Param("usuario_id") Long usuario_id);
 }
