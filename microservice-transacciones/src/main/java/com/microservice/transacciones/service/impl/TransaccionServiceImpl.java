@@ -51,7 +51,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double obtenerTasaAhorroPorId(String token) {
 		double ingresos = transaccionRepository.obtenerTotalIngresosPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerTotalGastosPorId(obtenerIdUsuarioToken(token));
-		double tasaAhorro = Math.round((gastos / ingresos) * 100);
+		double tasaAhorro = Math.round(((ingresos - gastos)/ingresos) * 100);
 		return tasaAhorro;
 	}
 	
@@ -82,7 +82,7 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double obtenerTasaAhorroMensualPorId(String token) {
 		double ingresos = transaccionRepository.obtenerIngresosMensualPorId(obtenerIdUsuarioToken(token));
 		double gastos = transaccionRepository.obtenerGastosMensualPorId(obtenerIdUsuarioToken(token));
-		double tasaAhorro = Math.round((gastos / ingresos) * 100);
+		double tasaAhorro = Math.round(((ingresos - gastos)/ingresos) * 100);
 		return tasaAhorro;
 	}
 
