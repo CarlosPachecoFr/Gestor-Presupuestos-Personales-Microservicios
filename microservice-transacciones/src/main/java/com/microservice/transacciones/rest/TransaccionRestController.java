@@ -1,5 +1,6 @@
 package com.microservice.transacciones.rest;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.microservice.transacciones.dto.TransaccionDto;
 import com.microservice.transacciones.service.TransaccionService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/gpp/transaccion")
@@ -119,5 +123,12 @@ public class TransaccionRestController {
 	@GetMapping("/obtenerGastosSemanales")
 	public List<Object[]> obtenerGastosSemanales(@RequestHeader("Authorization") String token){
 		return transaccionService.obtenerGastosSemanales(token);
+	}
+	
+	@GetMapping("/exportarArchivo")
+	public void exportarArchivo(@RequestHeader("Authorization") String token, @RequestParam String periodo, @RequestParam String formato, HttpServletResponse response) throws IOException{
+		if(formato.equals("excel")) {
+			transaccionService.exportarCsv(token, periodo, formato, response);
+		}
 	}
 }

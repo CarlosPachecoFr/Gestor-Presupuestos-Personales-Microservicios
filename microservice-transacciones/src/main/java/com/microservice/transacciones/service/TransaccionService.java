@@ -1,9 +1,12 @@
 package com.microservice.transacciones.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import com.microservice.transacciones.dto.TransaccionDto;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface TransaccionService {
 
@@ -46,4 +49,6 @@ public interface TransaccionService {
 	public List<Object[]> obtenerTotalIngresosPorCategoria(String token);
 	
 	public List<Object[]> obtenerGastosSemanales(String token);
+	
+	public void exportarCsv(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
 }

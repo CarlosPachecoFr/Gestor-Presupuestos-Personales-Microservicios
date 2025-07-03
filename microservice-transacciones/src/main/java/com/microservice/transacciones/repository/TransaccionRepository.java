@@ -162,4 +162,30 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 	        "'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');",
 	        nativeQuery = true)
 	public List<Object[]> obtenerGastosSemanales(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = """
+		    SELECT * FROM transacciones 
+		    WHERE usuario_id = :usuario_id 
+		    AND MONTH(fecha_transaccion) = MONTH(CURDATE()) 
+		    AND YEAR(fecha_transaccion) = YEAR(CURDATE())
+		    ORDER BY fecha_transaccion DESC
+		""", nativeQuery = true)
+		List<TransaccionEntity> obtenerTransaccionesEsteMes(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = """
+		    SELECT * FROM transacciones 
+		    WHERE usuario_id = :usuario_id 
+		    AND MONTH(fecha_transaccion) = MONTH(CURDATE() - INTERVAL 1 MONTH) 
+		    AND YEAR(fecha_transaccion) = YEAR(CURDATE() - INTERVAL 1 MONTH)
+		    ORDER BY fecha_transaccion DESC
+		""", nativeQuery = true)
+		List<TransaccionEntity> obtenerTransaccionesMesPasado(@Param("usuario_id") Long usuario_id);
+	
+	@Query(value = """
+		    SELECT * FROM transacciones 
+		    WHERE usuario_id = :usuario_id 
+		    AND YEAR(fecha_transaccion) = YEAR(CURDATE())
+		    ORDER BY fecha_transaccion DESC
+		""", nativeQuery = true)
+		List<TransaccionEntity> obtenerTransaccionesEsteAnio(@Param("usuario_id") Long usuario_id);
 }

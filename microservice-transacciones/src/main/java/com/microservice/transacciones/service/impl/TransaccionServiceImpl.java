@@ -1,5 +1,7 @@
 package com.microservice.transacciones.service.impl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import com.microservice.transacciones.dto.TransaccionDto;
 import com.microservice.transacciones.entity.TransaccionEntity;
 import com.microservice.transacciones.repository.TransaccionRepository;
 import com.microservice.transacciones.service.TransaccionService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class TransaccionServiceImpl implements TransaccionService{
@@ -153,6 +157,56 @@ public class TransaccionServiceImpl implements TransaccionService{
 	@Override
 	public List<Object[]> obtenerGastosSemanales(String token) {
 		return transaccionRepository.obtenerGastosSemanales(transaccionClient.obtenerUsuarioId(token));
+	}
+
+	@Override
+	public void exportarCsv(String token, String periodo, String formato, HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
+	    response.setHeader("Content-Disposition", "attachment; filename=transacciones_" + periodo + ".csv");
+	    List<TransaccionDto> transacciones = obtenerTransaccionesPorPeriodo(token, periodo);
+	    
+	    try (PrintWriter writer = response.getWriter()) {
+	        writer.println("Fecha,Tipo,Categoría,Cantidad,Descripción");
+
+	        for (TransaccionDto t : transacciones) {
+	            writer.printf("%s,%s,%s,%.2f,%s\n",
+	                t.getFecha_transaccion(),
+	                t.getTipo(),
+	                t.getCategoria(),
+	                t.getCantidad(),
+	                t.getDescripcion().replace(",", " ")  // evitar problemas con comas
+	            );
+	        }
+	    }
+		
+	}
+	
+	private List<TransaccionDto> obtenerTransaccionesPorPeriodo(String token, String periodo){
+		List<TransaccionDto> transacciones = new ArrayList<TransaccionDto>();
+		Long usuario_id = transaccionClient.obtenerUsuarioId(token);
+		switch(periodo) {
+			case "todas":
+				for(TransaccionEntity t: transaccionRepository.obtenerTransacciones(usuario_id)) {
+					transacciones.add(TransaccionDto.parse(t));
+				}
+				break;
+			case "esteMes":
+				for(TransaccionEntity t: transaccionRepository.obtenerTransaccionesEsteMes(usuario_id)) {
+					transacciones.add(TransaccionDto.parse(t));
+				}
+				break;
+			case "mesPasado":
+				for(TransaccionEntity t: transaccionRepository.obtenerTransaccionesMesPasado(usuario_id)) {
+					transacciones.add(TransaccionDto.parse(t));
+				}
+				break;
+			case "esteAño":
+				for(TransaccionEntity t: transaccionRepository.obtenerTransaccionesEsteAnio(usuario_id)) {
+					transacciones.add(TransaccionDto.parse(t));
+				}
+				break;
+		}
+		return transacciones;
 	}
 
 }
