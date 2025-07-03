@@ -53,4 +53,6 @@ public interface TransaccionService {
 	public void exportarCsv(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
 	
 	public void exportarJSON(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
+	
+	public void exportarTxt(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
 }

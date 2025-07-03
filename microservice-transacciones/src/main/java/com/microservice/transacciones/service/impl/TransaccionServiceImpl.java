@@ -229,4 +229,62 @@ public class TransaccionServiceImpl implements TransaccionService{
 	    }
 	}
 
+	@Override
+	public void exportarTxt(String token, String periodo, String formato, HttpServletResponse response) throws IOException {
+		response.setContentType("text/plain");
+	    response.setHeader("Content-Disposition", "attachment; filename=transacciones_" + periodo + ".txt");
+	    
+	    List<TransaccionDto> transacciones = obtenerTransaccionesPorPeriodo(token, periodo);
+	    
+	    Long usuario_id = transaccionClient.obtenerUsuarioId(token);
+	    double totalIngresos = transaccionRepository.obtenerTotalIngresosPorId(usuario_id);
+	    double totalGastos = transaccionRepository.obtenerTotalGastosPorId(usuario_id);
+	    BigDecimal balance = obtenerBalancePorId(token);
+	    int numeroTransacciones = transaccionRepository.obtenerTransacciones(usuario_id).size();
+	    
+	    List<Object[]> gastosPorCategoria = transaccionRepository.obtenerGastosPorCategoria(usuario_id);
+	    
+	    String nombrePeriodo;
+	    switch (periodo) {
+	        case "todas": nombrePeriodo = "Todas las transacciones"; break;
+	        case "esteMes": nombrePeriodo = "Este mes"; break;
+	        case "mesPasado": nombrePeriodo = "Mes pasado"; break;
+	        case "esteAño": nombrePeriodo = "Este año"; break;
+	        default: nombrePeriodo = periodo; break;
+	    }
+	    
+	    try (PrintWriter writer = response.getWriter()) {
+	        writer.println("REPORTE FINANCIERO");
+	        writer.println("==================");
+	        writer.println("Período: " + nombrePeriodo);
+	        writer.println("Fecha de generación: " + java.time.LocalDate.now());
+	        writer.println();
+	        writer.println("RESUMEN");
+	        writer.println("-------");
+	        writer.printf("Total Ingresos: $%.2f%n", totalIngresos);
+	        writer.printf("Total Gastos: $%.2f%n", totalGastos);
+	        writer.printf("Balance: $%.2f%n", balance);
+	        writer.printf("Número de transacciones: %d%n", numeroTransacciones);
+	        writer.println();
+	        writer.println("GASTOS POR CATEGORÍA");
+	        writer.println("-------------------");
+	        for (Object[] row : gastosPorCategoria) {
+	            String categoria = (String) row[0];
+	            double total = ((Number) row[1]).doubleValue();
+	            writer.printf("%s: $%.2f%n", categoria, total);
+	        }
+	        writer.println();
+	        writer.println("DETALLE DE TRANSACCIONES");
+	        writer.println("-----------------------");
+	        for (TransaccionDto t : transacciones) {
+	            writer.printf("%s | %s | %s | %s | $%.2f%n",
+	                t.getFecha_transaccion(),
+	                t.getTipo(),
+	                t.getCategoria(),
+	                t.getDescripcion().replace("\n", " ").replace("\r", " "),
+	                t.getCantidad());
+	        }
+	    }
+	}
+
 }

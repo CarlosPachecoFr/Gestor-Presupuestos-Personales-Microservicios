@@ -133,5 +133,8 @@ public class TransaccionRestController {
 		if(formato.equals("json")) {
 			transaccionService.exportarJSON(token, periodo, formato, response);
 		}
+		if(formato.equals("txt")) {
+			transaccionService.exportarTxt(token, periodo, formato, response);
+		}
 	}
 }
