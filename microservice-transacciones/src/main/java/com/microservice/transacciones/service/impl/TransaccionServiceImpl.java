@@ -10,6 +10,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.microservice.transacciones.client.TransaccionClient;
 import com.microservice.transacciones.dto.TransaccionDto;
 import com.microservice.transacciones.entity.TransaccionEntity;
@@ -207,6 +210,23 @@ public class TransaccionServiceImpl implements TransaccionService{
 				break;
 		}
 		return transacciones;
+	}
+
+	@Override
+	public void exportarJSON(String token, String periodo, String formato, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+	    response.setHeader("Content-Disposition", "attachment; filename=transacciones_" + periodo + ".json");
+
+	    List<TransaccionDto> transacciones = obtenerTransaccionesPorPeriodo(token, periodo);
+		
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.registerModule(new JavaTimeModule());  // registra soporte para fechas Java 8
+	    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // para que las fechas salgan en formato ISO yyyy-MM-dd, no como timestamps numéricos
+	    String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(transacciones);
+
+	    try (PrintWriter writer = response.getWriter()) {
+	        writer.print(json);
+	    }
 	}
 
 }

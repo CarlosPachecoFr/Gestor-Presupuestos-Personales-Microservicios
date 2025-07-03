@@ -51,4 +51,6 @@ public interface TransaccionService {
 	public List<Object[]> obtenerGastosSemanales(String token);
 	
 	public void exportarCsv(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
+	
+	public void exportarJSON(String token, String periodo, String formato, HttpServletResponse response) throws IOException;
 }

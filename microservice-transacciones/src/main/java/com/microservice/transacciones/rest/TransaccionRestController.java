@@ -130,5 +130,8 @@ public class TransaccionRestController {
 		if(formato.equals("excel")) {
 			transaccionService.exportarCsv(token, periodo, formato, response);
 		}
+		if(formato.equals("json")) {
+			transaccionService.exportarJSON(token, periodo, formato, response);
+		}
 	}
 }
