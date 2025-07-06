@@ -36,5 +36,10 @@ public class MetaRestController {
 	public void añadirCantidadMeta(@RequestHeader("Authorization") String token, @RequestParam double cantidad_añadir, @RequestParam Long id) {
 		metaService.añadirCantidadMeta(token, cantidad_añadir, id);
 	}
+	
+	@GetMapping("/obtenerMetaPorId")
+	public MetaDto obtenerMetaPorId(@RequestParam Long id) {
+		return metaService.obtenerMetaPorId(id);
+	}
 
 }

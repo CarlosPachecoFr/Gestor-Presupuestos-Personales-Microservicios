@@ -11,4 +11,6 @@ public interface MetaService {
 	public List<MetaDto> obtenerMetasUsuarioId(String token);
 	
 	public void añadirCantidadMeta(String token, double cantidad_añadir, Long id);
+	
+	public MetaDto obtenerMetaPorId(Long id);
 }

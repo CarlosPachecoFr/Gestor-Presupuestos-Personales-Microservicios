@@ -43,4 +43,9 @@ public class MetaServiceImpl implements MetaService{
 		metaRepository.añadirCantidadMeta(usuario_id, cantidad_añadir, id);
 	}
 
+	@Override
+	public MetaDto obtenerMetaPorId(Long id) {
+		return MetaDto.parse(metaRepository.obtenerMetaPorId(id));
+	}
+
 }
