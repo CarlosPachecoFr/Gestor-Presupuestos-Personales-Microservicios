@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.microservice.auth.dto.UsuarioDto;
 import com.microservice.auth.entity.UsuarioEntity;
 
-@FeignClient(name = "msvc-usuario")
+@FeignClient(name = "microservice-usuario")
 public interface AuthClient {
 
 	@PostMapping("/gpp/usuario/crearUsuario")

@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "msvc-auth")
+@FeignClient(name = "microservice-auth")
 public interface TransaccionClient {
 	
 	@GetMapping("/gpp/auth/obtenerUsuarioId")

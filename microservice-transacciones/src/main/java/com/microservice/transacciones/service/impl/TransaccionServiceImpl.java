@@ -97,16 +97,26 @@ public class TransaccionServiceImpl implements TransaccionService{
 	public double variacionIngresosMesAnteriorPorId(String token) {
 		double ingresosMesActual = transaccionRepository.obtenerIngresosMensualPorId(transaccionClient.obtenerUsuarioId(token));
 		double ingresosMesAnterior = transaccionRepository.obtenerIngresosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
-		double variacion = Math.round(((ingresosMesActual - ingresosMesAnterior) / ingresosMesAnterior) * 100);
-		return variacion;
+		if (ingresosMesAnterior == 0) {
+	        return 0.0;
+	    }
+
+	    double variacion = ((ingresosMesActual - ingresosMesAnterior) / ingresosMesAnterior) * 100;
+
+	    return Math.round(variacion * 100.0) / 100.0;
 	}
 
 	@Override
 	public double variacionGastosMesAnteriorPorId(String token) {
 		double gastosMesActual = transaccionRepository.obtenerGastosMensualPorId(transaccionClient.obtenerUsuarioId(token));
 		double gastosMesAnterior = transaccionRepository.obtenerGastosMesAnteriorPorId(transaccionClient.obtenerUsuarioId(token));
-		double variacion = Math.round(((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100);
-		return variacion;
+		if (gastosMesAnterior== 0) {
+	        return 0.0;
+	    }
+
+	    double variacion = ((gastosMesActual - gastosMesAnterior) / gastosMesAnterior) * 100;
+
+	    return Math.round(variacion * 100.0) / 100.0;
 	}
 
 	@Override

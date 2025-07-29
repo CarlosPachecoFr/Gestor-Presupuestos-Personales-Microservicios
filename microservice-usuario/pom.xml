@@ -3,9 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		 <groupId>com.mycompany.app</groupId>
-  		<artifactId>microservices-gpp</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-parent</artifactId>
+    	<version>3.5.0</version>
+  		<relativePath/>
 	</parent>
 	<groupId>com.microservice.usuario</groupId>
 	<artifactId>microservice-usuario</artifactId>
@@ -60,6 +61,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.32</version>
+		    <scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

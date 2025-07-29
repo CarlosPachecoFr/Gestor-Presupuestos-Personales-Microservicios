@@ -15,28 +15,28 @@ spring:
            allowedHeaders: ["*"]
       routes:
         - id: usuario
-          uri: lb://msvc-usuario
+          uri: lb://microservice-usuario
           predicates:
             - Path=/gpp/usuario/**
         - id: auth
-          uri: lb://msvc-auth
+          uri: lb://microservice-auth
           predicates:
             - Path=/gpp/auth/**
         - id: transaccion
-          uri: lb://msvc-transacciones
+          uri: lb://microservice-transacciones
           predicates:
             - Path=/gpp/transaccion/**
         - id: meta
-          uri: lb://msvc-metas
+          uri: lb://microservice-metas
           predicates:
             - Path=/gpp/metas/**
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: microservice-eureka
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://microservice-eureka:8761/eureka
 
 management:
   endpoints:

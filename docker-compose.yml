@@ -1,0 +1,270 @@
+version: '2.4'
+services:
+  #BASES DE DATOS
+  mysql-auth:
+      image: mysql:8.0
+      environment:
+        - MYSQL_ROOT_PASSWORD=${PASSWORD_DATABASE}
+        - MYSQL_DATABASE=usuariodb
+      ports:
+        - "33061:3306"
+      networks:
+        - gpp
+      volumes:
+        - mysql_auth_data:/var/lib/mysql
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$MYSQL_ROOT_PASSWORD"]
+        interval: 15s
+        timeout: 10s
+        retries: 10
+        start_period: 30s
+
+  mysql-usuario:
+      image: mysql:8.0
+      environment:
+        - MYSQL_ROOT_PASSWORD=${PASSWORD_DATABASE}
+        - MYSQL_DATABASE=usuariodb
+      ports:
+        - "33062:3306"
+      networks:
+        - gpp
+      volumes:
+        - mysql_usuario_data:/var/lib/mysql
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$MYSQL_ROOT_PASSWORD"]
+        interval: 15s
+        timeout: 10s
+        retries: 10
+        start_period: 30s
+
+  mysql-transacciones:
+      image: mysql:8.0
+      environment:
+        - MYSQL_ROOT_PASSWORD=${PASSWORD_DATABASE}
+        - MYSQL_DATABASE=transaccionesdb
+      ports:
+        - "33063:3306"
+      networks:
+        - gpp
+      volumes:
+        - mysql_transacciones_data:/var/lib/mysql
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$MYSQL_ROOT_PASSWORD"]
+        interval: 15s
+        timeout: 10s
+        retries: 10
+        start_period: 30s
+
+  mysql-metas:
+      image: mysql:8.0
+      environment:
+        - MYSQL_ROOT_PASSWORD=${PASSWORD_DATABASE}
+        - MYSQL_DATABASE=metasdb
+      ports:
+        - "33064:3306"
+      networks:
+        - gpp
+      volumes:
+        - mysql_metas_data:/var/lib/mysql
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$MYSQL_ROOT_PASSWORD"]
+        interval: 15s
+        timeout: 10s
+        retries: 10
+        start_period: 30s
+  #Microservicio config
+  microservice-config:
+      build: ./microservice-config
+      ports:
+        - "8888:8888"
+      networks:
+        - gpp
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+        interval: 10s
+        retries: 5
+      environment:
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+        - EUREKA_CLIENT_FETCH_REGISTRY=false
+  #Microservicio eureka
+  microservice-eureka:
+      build: ./microservice-eureka
+      ports:
+        - "8761:8761"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - SPRING_PROFILES_ACTIVE=docker
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+        - EUREKA_CLIENT_FETCH_REGISTRY=false
+      healthcheck:
+         test: ["CMD", "curl", "-f","http://localhost:8761/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+  #Microservicio usuario
+  microservice-usuario:
+      build: ./microservice-usuario
+      ports:
+        - "9090:9090"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+        microservice-eureka:
+          condition: service_healthy
+        mysql-usuario:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+        - SPRING_PROFILES_ACTIVE=docker
+        - SPRING_DATASOURCE_URL=${URL_DATABASE_USUARIOS}
+        - SPRING_DATASOURCE_USERNAME=${USERNAME_DATABASE}
+        - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DATABASE}
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+        - EUREKA_CLIENT_FETCH_REGISTRY=true
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+  #Microservicio auth
+  microservice-auth:
+      build: ./microservice-auth
+      ports:
+        - "9091:9091"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+        microservice-eureka:
+          condition: service_healthy
+        microservice-usuario:
+           condition: service_healthy
+        mysql-usuario:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+        - SPRING_PROFILES_ACTIVE=docker
+        - SPRING_DATASOURCE_URL=${URL_DATABASE_USUARIOS}
+        - SPRING_DATASOURCE_USERNAME=${USERNAME_DATABASE}
+        - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DATABASE}
+        - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+        - JWT_EXPIRATION=86400000
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+        - EUREKA_CLIENT_FETCH_REGISTRY=true
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost:9091/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+  #Microservicio transacciones
+  microservice-transacciones:
+      build: ./microservice-transacciones
+      ports:
+        - "9092:9092"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+        microservice-eureka:
+          condition: service_healthy
+        microservice-auth:
+          condition: service_healthy
+        mysql-transacciones:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+        - SPRING_PROFILES_ACTIVE=docker
+        - SPRING_DATASOURCE_URL=${URL_DATABASE_TRANSACCIONES}
+        - SPRING_DATASOURCE_USERNAME=${USERNAME_DATABASE}
+        - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DATABASE}
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+        - EUREKA_CLIENT_FETCH_REGISTRY=true
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost:9092/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+  #Microservicio metas
+  microservice-metas:
+      build: ./microservice-metas
+      ports:
+        - "9093:9093"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+        microservice-eureka:
+          condition: service_healthy
+        microservice-auth:
+          condition: service_healthy
+        mysql-metas:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+        - SPRING_PROFILES_ACTIVE=docker
+        - SPRING_DATASOURCE_URL=${URL_DATABASE_METAS}
+        - SPRING_DATASOURCE_USERNAME=${USERNAME_DATABASE}
+        - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DATABASE}
+        - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+        - EUREKA_CLIENT_FETCH_REGISTRY=true
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost:9093/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+  #Microservicio gateway
+  microservice-gateway:
+      build: ./microservice-gateway
+      ports:
+        - "8080:8080"
+      networks:
+        - gpp
+      depends_on:
+        microservice-config:
+          condition: service_healthy
+        microservice-eureka:
+          condition: service_healthy
+        microservice-auth:
+          condition: service_healthy
+        microservice-usuario:
+          condition: service_healthy
+        microservice-transacciones:
+          condition: service_healthy
+        microservice-metas:
+          condition: service_healthy
+      environment:
+        - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+        - SPRING_PROFILES_ACTIVE=docker
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+
+
+volumes:
+  mysql_auth_data:
+  mysql_usuario_data:
+  mysql_transacciones_data:
+  mysql_metas_data:
+
+
+networks:
+  gpp:
+    external: true
+    name: gpp_network

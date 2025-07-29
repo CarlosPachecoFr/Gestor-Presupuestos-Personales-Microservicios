@@ -55,13 +55,14 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
             "WHEN 10 THEN 'Octubre' " +
             "WHEN 11 THEN 'Noviembre' " +
             "WHEN 12 THEN 'Diciembre' END AS mes, " +
+            "MONTH(fecha_transaccion) AS mes_num, " +
             "SUM(cantidad) AS total " +
             "FROM transacciones " +
             "WHERE fecha_transaccion >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) " +
             "AND tipo = 'ingreso' " +
             "AND usuario_id = :usuario_id " +
-            "GROUP BY MONTH(fecha_transaccion) " +
-            "ORDER BY MONTH(fecha_transaccion)",
+            "GROUP BY mes, mes_num " +
+            "ORDER BY mes_num",
     nativeQuery = true)
 	public List<Object[]> obtenerIngresosUltimosMeses(@Param("usuario_id") Long usuario_id);
 	
@@ -78,13 +79,14 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
             "WHEN 10 THEN 'Octubre' " +
             "WHEN 11 THEN 'Noviembre' " +
             "WHEN 12 THEN 'Diciembre' END AS mes, " +
+            "MONTH(fecha_transaccion) AS mes_num, " +
             "SUM(cantidad) AS total " +
             "FROM transacciones " +
             "WHERE fecha_transaccion >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) " +
             "AND tipo = 'gasto' " +
             "AND usuario_id = :usuario_id " +
-            "GROUP BY MONTH(fecha_transaccion) " +
-            "ORDER BY MONTH(fecha_transaccion)",
+            "GROUP BY mes, mes_num " +
+            "ORDER BY mes_num ",
     nativeQuery = true)
 	public List<Object[]> obtenerGastosUltimosMeses(@Param("usuario_id") Long usuario_id);
 	
@@ -143,23 +145,14 @@ public interface TransaccionRepository extends JpaRepository<TransaccionEntity, 
 	        "WHEN 6 THEN 'Viernes' " +
 	        "WHEN 7 THEN 'Sábado' " +
 	        "END AS dia_semana, " +
+	        "DAYOFWEEK(fecha_transaccion) AS dia_num, " +
 	        "SUM(cantidad) AS total_gastos " +
 	        "FROM transacciones " +
 	        "WHERE usuario_id = :usuario_id " +
 	        "AND tipo = 'gasto' " +
 	        "AND fecha_transaccion >= CURDATE() - INTERVAL 6 DAY " +
-	        "GROUP BY DAYOFWEEK(fecha_transaccion) " +
-	        "ORDER BY FIELD( " +
-	        "CASE DAYOFWEEK(fecha_transaccion) " +
-	        "WHEN 1 THEN 'Domingo' " +
-	        "WHEN 2 THEN 'Lunes' " +
-	        "WHEN 3 THEN 'Martes' " +
-	        "WHEN 4 THEN 'Miércoles' " +
-	        "WHEN 5 THEN 'Jueves' " +
-	        "WHEN 6 THEN 'Viernes' " +
-	        "WHEN 7 THEN 'Sábado' " +
-	        "END, " +
-	        "'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');",
+	        "GROUP BY dia_semana, dia_num " +
+	        "ORDER BY dia_num",
 	        nativeQuery = true)
 	public List<Object[]> obtenerGastosSemanales(@Param("usuario_id") Long usuario_id);
 	

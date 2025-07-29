@@ -1,5 +1,5 @@
 spring:
   application:
-    name: msvc-usuario
+    name: microservice-usuario
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://microservice-config:8888

@@ -1,17 +1,10 @@
 server:
-  port: 9091
-
-  
-application:
-  security:
-    jwt:
-      secret-key: ${JWT_SECRET_KEY}
-      expiration: 86400000
+  port: 9093
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${URL_DATABASE}
+    url: ${URL_DATABASE_METAS}
     username: ${USERNAME_DATABASE}
     password: ${PASSWORD_DATABASE}
   jpa:
@@ -22,7 +15,10 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: microservice-metas
+    prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://microservice-eureka:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true	

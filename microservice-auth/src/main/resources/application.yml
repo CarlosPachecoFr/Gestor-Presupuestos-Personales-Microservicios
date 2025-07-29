@@ -1,5 +1,5 @@
 spring:
   application:
-    name: msvc-auth
+    name: microservice-auth
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://microservice-config:8888

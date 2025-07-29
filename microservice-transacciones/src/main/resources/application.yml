@@ -1,5 +1,5 @@
 spring:
   application:
-    name: msvc-transacciones
+    name: microservice-transacciones
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://microservice-config:8888

@@ -27,7 +27,7 @@ public class SecurityConfig {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(req ->
-					req.requestMatchers("/gpp/auth/**")
+					req.requestMatchers("/gpp/auth/**", "/actuator/health")
 							.permitAll()
 							.anyRequest()
 							.authenticated()
