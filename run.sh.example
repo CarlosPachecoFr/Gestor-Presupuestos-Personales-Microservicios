@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Crear red si no existe
+docker network inspect gpp_network >/dev/null 2>&1 || docker network create gpp_network
+
+# 🚨 Define aquí tus variables sensibles
+export PASSWORD_DATABASE="contraseña_de_base_de_datos"
+export USERNAME_DATABASE="usuario_de_base_de_datos"
+export URL_DATABASE_USUARIOS="jdbc:mysql://mysql-usuario:3306/nombre_de_base_de_datos_usuarios"
+export URL_DATABASE_METAS="jdbc:mysql://mysql-metas:3306/nombre_de_base_de_datos_metas"
+export URL_DATABASE_TRANSACCIONES="jdbc:mysql://mysql-transacciones:3306/nombre_de_base_de_datos_transacciones"
+export JWT_SECRET_KEY="aqui_debes_poner_una_clave_secreta_de_32_caracteres"
+
+# 🐳 Lanza Docker Compose
+docker compose up --build
