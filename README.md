@@ -114,21 +114,21 @@ El backend proporciona una API REST que el frontend Angular consume para gestion
 4. Sube los cambios a tu fork (`git push origin feature/nueva-funcionalidad`).
 5. Abre un **Pull Request** en este repositorio.
 
-Por favor, asegúrate de seguir las guías de contribución (en desarrollo) y mantener un código limpio y bien documentado.
+Por favor, asegúrate de seguir las [guías de contribución](CONTRIBUTING.md) (en desarrollo) y mantener un código limpio y bien documentado.
 
 ## Estado del proyecto
 
-Este proyecto está **finalizado**, pero abierto a mejoras futuras, como la posibilidad de editar o eliminar transacciones. Revisa las issues para conocer las propuestas de mejora o errores reportados.
+Este proyecto está **finalizado**, pero abierto a mejoras futuras, como la posibilidad de editar o eliminar transacciones. Revisa las [issues](https://github.com/CarlosPachecoFr/Gestor-Presupuestos-Personales-Microservicios/issues) para conocer las propuestas de mejora o errores reportados.
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la [Licencia MIT](LICENSE). Consulta el archivo `LICENSE` para más detalles.
 
 ## Contacto
 
 Si tienes preguntas, sugerencias o quieres colaborar, puedes contactarme a través de:
 
-- **GitHub**: CarlosPachecoFr
+- **GitHub**: [CarlosPachecoFr](https://github.com/CarlosPachecoFr)
 - **Correo**: carlospachecofrutos@gmail.com
 
 ¡Gracias por tu interés en **Gestor de Presupuestos Personales - Microservicios**! 🚀
