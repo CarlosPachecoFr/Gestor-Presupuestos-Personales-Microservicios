@@ -2,7 +2,7 @@
 
 ## Descripción
 
-**Gestor de Presupuestos Personales - Microservicios** es el backend basado en una arquitectura de microservicios que soporta la aplicación frontend Gestor de Presupuestos Personales - Angular. Este proyecto gestiona la lógica de negocio y el almacenamiento de datos para la gestión de finanzas personales, permitiendo añadir ingresos y gastos, establecer metas financieras (por ejemplo, ahorrar para comprar un coche) y generar reportes financieros. Los datos se almacenan en bases de datos MySQL separadas para usuarios, metas y transacciones, y el backend proporciona una API REST para interactuar con el frontend.
+**Gestor de Presupuestos Personales - Microservicios** es el backend basado en una arquitectura de microservicios que soporta la aplicación frontend [Gestor de Presupuestos Personales-Angular](https://github.com/CarlosPachecoFr/Gestor-Presupuestos-Personales-Angular). Este proyecto gestiona la lógica de negocio y el almacenamiento de datos para la gestión de finanzas personales, permitiendo añadir ingresos y gastos, establecer metas financieras (por ejemplo, ahorrar para comprar un coche) y generar reportes financieros. Los datos se almacenan en bases de datos MySQL separadas para usuarios, metas y transacciones, y el backend proporciona una API REST para interactuar con el frontend.
 
 El proyecto está diseñado para ser escalable y modular, utilizando microservicios para separar funcionalidades clave. **El proyecto está finalizado**, pero abierto a mejoras y contribuciones futuras.
 
@@ -31,7 +31,7 @@ El proyecto está diseñado para ser escalable y modular, utilizando microservic
 - **Git**: Para clonar el repositorio.
 - **Git Bash**: Necesario para ejecutar el script `run.sh` en la raíz del proyecto (en Windows o entornos compatibles).
 - **MySQL**: Bases de datos configuradas y accesibles (definidas en `docker-compose.yml` como `mysql-usuario`, `mysql-metas`, y `mysql-transacciones`).
-- Frontend configurado: Ver Gestor-Presupuestos-Personales-Angular.
+- Frontend configurado: Ver [Gestor-Presupuestos-Personales-Angular](https://github.com/CarlosPachecoFr/Gestor-Presupuestos-Personales-Angular).
 
 ## Instalación
 
@@ -90,7 +90,7 @@ El backend proporciona una API REST que el frontend Angular consume para gestion
    git clone https://github.com/CarlosPachecoFr/Gestor-Presupuestos-Personales-Angular.git
    ```
 
-2. Sigue las instrucciones del README del frontend para ejecutarlo. La URL de la API ya está configurada en los archivos `src/environments/environment.ts` y `src/environments/environment.prod.ts`.
+2. Sigue las instrucciones del [README del frontend](https://github.com/CarlosPachecoFr/Gestor-Presupuestos-Personales-Angular) para ejecutarlo. La URL de la API ya está configurada en los archivos `src/environments/environment.ts` y `src/environments/environment.prod.ts`.
 
 ## Uso
 
