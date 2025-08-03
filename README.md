@@ -61,9 +61,6 @@ El proyecto se ejecuta utilizando **Docker Compose** para gestionar múltiples c
      ```bash
      export PASSWORD_DATABASE="tu_contraseña"
      export USERNAME_DATABASE="tu_usuario"
-     export URL_DATABASE_USUARIOS="jdbc:mysql://mysql-usuario:3306/tu_base_de_datos_usuarios"
-     export URL_DATABASE_METAS="jdbc:mysql://mysql-metas:3306/tu_base_de_datos_metas"
-     export URL_DATABASE_TRANSACCIONES="jdbc:mysql://mysql-transacciones:3306/tu_base_de_datos_transacciones"
      export JWT_SECRET_KEY="tu_clave_secreta_de_32_caracteres"
      ```
    - Asegúrate de personalizar estas variables con valores reales para tu entorno. El archivo `run.sh` está excluido en `.gitignore` para evitar subir información sensible.
