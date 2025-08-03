@@ -17,6 +17,7 @@ El proyecto está diseñado para ser escalable y modular, utilizando microservic
 ## Tecnologías utilizadas
 
 - **Spring Boot**: Framework principal para el desarrollo de los microservicios.
+- **Spring Security + JWT**: Gestión de autenticación y autorización basada en tokens JWT. Protege los endpoints y valida las sesiones de usuario de forma segura.
 - **Spring Cloud Config Server**: Gestión centralizada de configuraciones.
 - **Eureka Discovery Server**: Registro y descubrimiento de servicios.
 - **Spring Data JPA & MySQL**: Persistencia de datos relacionales en bases de datos separadas para usuarios, metas y transacciones.
