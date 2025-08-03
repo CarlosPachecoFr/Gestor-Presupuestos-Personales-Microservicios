@@ -4,12 +4,12 @@
 docker network inspect gpp_network >/dev/null 2>&1 || docker network create gpp_network
 
 # 🚨 Define aquí tus variables sensibles
-export PASSWORD_DATABASE="contraseña_de_base_de_datos"
+export PASSWORD_DATABASE="contraseña_de_base_de_datos" #No puede estar vacia
 export USERNAME_DATABASE="usuario_de_base_de_datos"
-export URL_DATABASE_USUARIOS="jdbc:mysql://mysql-usuario:3306/nombre_de_base_de_datos_usuarios"
-export URL_DATABASE_METAS="jdbc:mysql://mysql-metas:3306/nombre_de_base_de_datos_metas"
-export URL_DATABASE_TRANSACCIONES="jdbc:mysql://mysql-transacciones:3306/nombre_de_base_de_datos_transacciones"
-export JWT_SECRET_KEY="aqui_debes_poner_una_clave_secreta_de_32_caracteres"
+export URL_DATABASE_USUARIOS="jdbc:mysql://mysql-usuario:3306/usuariodb" #Este es el nombre de base de datos definido en el docker-compose
+export URL_DATABASE_METAS="jdbc:mysql://mysql-metas:3306/metasdb" #Este es el nombre de base de datos definido en el docker-compose
+export URL_DATABASE_TRANSACCIONES="jdbc:mysql://mysql-transacciones:3306/transaccionesdb" #Este es el nombre de base de datos definido en el docker-compose
+export JWT_SECRET_KEY="aqui_debes_poner_una_clave_secreta_de_32_caracteres" #Ejemplo: "a12b34cd56ef7890a1b2c3d4e5f67890abcdefabcdefabcdefabcdefabcdef1234"
 
 # 🐳 Lanza Docker Compose
 docker compose up --build
