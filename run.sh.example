@@ -5,7 +5,7 @@ docker network inspect gpp_network >/dev/null 2>&1 || docker network create gpp_
 
 # 🚨 Define aquí tus variables sensibles
 export PASSWORD_DATABASE="contraseña_de_base_de_datos" #No puede estar vacia
-export USERNAME_DATABASE="usuario_de_base_de_datos" #Ejemplo: "root"
+export USERNAME_DATABASE="usuario_de_base_de_datos" #Puedes dejarlo vacio
 export URL_DATABASE_USUARIOS="jdbc:mysql://mysql-usuario:3306/usuariodb" #Este es el nombre de base de datos definido en el docker-compose
 export URL_DATABASE_METAS="jdbc:mysql://mysql-metas:3306/metasdb" #Este es el nombre de base de datos definido en el docker-compose
 export URL_DATABASE_TRANSACCIONES="jdbc:mysql://mysql-transacciones:3306/transaccionesdb" #Este es el nombre de base de datos definido en el docker-compose
